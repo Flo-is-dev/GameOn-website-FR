@@ -16,6 +16,8 @@ const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
 const email = document.getElementById("email");
 const quantity = document.getElementById("quantity");
+const radio1 = document.getElementById("location1");
+const checkbox1 = document.getElementById("checkbox1");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -41,16 +43,21 @@ btnSubmit.addEventListener("click", (e) => {
   e.preventDefault();
 
   if (firstName.value.length < 3) {
-    alert("Prénom trop court");
+    firstName.parentElement.innerHTML += `<p  class="error"> Veuillez entrer 2 caractères ou plus.
+</p>`;
     console.log(firstName.value.length);
   } else if (lastName.value.length < 3) {
-    alert("Nom trop court");
+    lastError.innerText = "Veuillez entrer 2 caractères ou plus.";
     console.log(lastName.value.length);
   } else if (!email.value.match(/@/)) {
     alert("Adresse mail non valide");
-  } else if (!isNaN(quantity.value)) {
-    console.log("C'est un Nombre");
+  } else if (isNaN(quantity.value)) {
+    console.log("C'est PAS un Nombre");
     console.log(quantity.value);
+  } else if (radio1.checked) {
+    console.log("radio1 coché");
+  } else if (!checkbox1.checked) {
+    alert("Veuillez cocher les CGU");
   } else {
     alert("Formulaire bien submit");
     console.log("TOUT EST BON");
