@@ -36,7 +36,7 @@ function launchModal() {
   });
 }
 
-// Effet de validation lorsqu'on valide le formulaire
+// Effet de validation lorsqu'on valide le formulaire et vérification étape par étape
 
 btnSubmit.addEventListener("click", (e) => {
   // Pour prevenir le comportement par défaut de l'input de type submit
@@ -44,22 +44,29 @@ btnSubmit.addEventListener("click", (e) => {
 
   if (firstName.value.length < 3) {
     firstName.parentElement.innerHTML += `<p  class="error"> Veuillez entrer 2 caractères ou plus.
-</p>`;
+    </p>`;
     console.log(firstName.value.length);
   } else if (lastName.value.length < 3) {
     lastError.innerText = "Veuillez entrer 2 caractères ou plus.";
     console.log(lastName.value.length);
   } else if (!email.value.match(/@/)) {
     alert("Adresse mail non valide");
+  } else if (isNaN(birthdate.value) != true) {
+    birthdate.parentElement.innerHTML += `<p  class="error">Vous devez entrer votre date de naissance.
+    </p>`;
   } else if (isNaN(quantity.value)) {
     console.log("C'est PAS un Nombre");
     console.log(quantity.value);
   } else if (radio1.checked) {
     console.log("radio1 coché");
   } else if (!checkbox1.checked) {
-    alert("Veuillez cocher les CGU");
+    checkbox1.parentElement.innerHTML += `<p class="error"> Vous devez vérifier que vous acceptez les termes et conditions.
+    </p>`;
   } else {
-    alert("Formulaire bien submit");
+    document.querySelector(
+      ".btn-submit"
+    ).parentElement.innerHTML += `<p class="success"> Merci ! Votre réservation a été reçue.
+    </p>`;
     console.log("TOUT EST BON");
   }
 });
