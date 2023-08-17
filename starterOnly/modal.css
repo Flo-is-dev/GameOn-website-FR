@@ -530,12 +530,14 @@ footer {
   }
 }
 
-.error {
-  font-size: 0.9rem;
-  color: red;
+.formData span.span {
+  visibility: hidden;
+  opacity: 0;
+  font-size: 17px;
 }
 
-.success {
-  font-size: 1.4rem;
-  color: rgb(108, 243, 81);
+.error span.span {
+  visibility: visible;
+  opacity: 1;
+  color: red;
 }

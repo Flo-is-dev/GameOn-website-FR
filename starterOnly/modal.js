@@ -28,8 +28,9 @@ function launchModal() {
   console.log("ca click");
 
   //   On cible la croix de fermeture de modal,
-  // au click la modal se ferme
+  // TODO au click la modal se ferme  (remove.eventlistener)
   const close = document.querySelector(".close");
+
   close.addEventListener("click", () => {
     modalbg.style.display = "none";
     console.log("ca ferme");
@@ -69,4 +70,102 @@ btnSubmit.addEventListener("click", (e) => {
     </p>`;
     console.log("TOUT EST BON");
   }
+});
+
+// * ------------2nd CHANCE----------- **********************
+
+const inputs = document.querySelectorAll(
+  "input[type=text],input[type=email],input[type=date],input[type=number],input[type=radio],input[type=checkbox]"
+);
+
+// console.log(inputs);
+
+const firstnameChecker = (value) => {
+  const firstName = document.getElementById("first");
+  if (value.length <= 2) {
+    firstName.parentElement.classList.add("error");
+  } else {
+    firstName.parentElement.classList.remove("error");
+  }
+};
+
+const lastnameChecker = (value) => {
+  console.log(value);
+  const lastName = document.getElementById("last");
+  if (value.length <= 2) {
+    lastName.parentElement.classList.add("error");
+  } else {
+    lastName.parentElement.classList.remove("error");
+  }
+};
+
+const emailChecker = (value) => {
+  const email = document.getElementById("email");
+  console.log(value);
+  if (!value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    email.parentElement.classList.add("error");
+  } else {
+    email.parentElement.classList.remove("error");
+  }
+};
+
+const birthdateChecker = (value) => {
+  console.log(value);
+  const birthDate = document.getElementById("birthdate");
+
+  if (isNaN(value) != true) {
+    birthDate.parentElement.classList.add("error");
+  } else {
+    birthDate.parentElement.classList.remove("error");
+  }
+};
+
+const playChecker = (value) => {
+  console.log(value);
+};
+
+const cityChecker = (value) => {
+  console.log(value);
+};
+
+const cgvChecker = (value) => {
+  console.log(value);
+};
+
+inputs.forEach((input) => {
+  input.addEventListener("input", (e) => {
+    // console.log(e.target.id);
+    // console.log(e.target.value);
+    switch (e.target.id) {
+      case "first":
+        firstnameChecker(e.target.value);
+        break;
+      case "last":
+        lastnameChecker(e.target.value);
+        break;
+      case "email":
+        emailChecker(e.target.value);
+        break;
+      case "birthdate":
+        birthdateChecker(e.target.value);
+        break;
+      case "quantity":
+        playChecker(e.target.value);
+        break;
+      case "location1":
+      case "location2":
+      case "location3":
+      case "location4":
+      case "location5":
+      case "location6":
+        cityChecker(e.target.value);
+        break;
+      case "checkbox1":
+      case "checkbox2":
+        cgvChecker(e.target.value);
+        break;
+      default:
+        nul;
+    }
+  });
 });
