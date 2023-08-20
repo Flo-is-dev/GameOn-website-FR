@@ -68,7 +68,7 @@ img {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1130px) {
   .topnav a {
     display: none;
   }
@@ -78,7 +78,7 @@ img {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1130px) {
   .topnav.responsive {
     position: relative;
   }
@@ -106,7 +106,7 @@ img {
 }
 
 main {
-  font-size: 130%;
+  /* font-size: 130%; */
   font-weight: bolder;
   color: black;
   padding-top: 0.5vw;
@@ -192,7 +192,7 @@ main {
 
 label {
   font-family: var(--font-default);
-  font-size: 17px;
+  font-size: 14px;
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
@@ -307,6 +307,7 @@ input[data-error]::after {
   opacity: 1;
   cursor: pointer;
   transform: scale(0.7);
+  z-index: 101;
 }
 .close:before,
 .close:after {
@@ -533,11 +534,57 @@ footer {
 .formData span.span {
   visibility: hidden;
   opacity: 0;
+  font-size: 12px;
+}
+
+.formData span.span-city {
+  visibility: hidden;
+  opacity: 0;
   font-size: 17px;
 }
 
 .error span.span {
   visibility: visible;
   opacity: 1;
-  color: red;
+  color: #ff4e60;
+}
+.error span.span-city {
+  visibility: visible;
+  opacity: 1;
+  color: #ff4e60;
+}
+
+.error-input {
+  border: 2px solid #ff4e60 !important;
+  background-color: #ffd6da;
+}
+
+.modal-body-succed.disable {
+  display: none;
+}
+
+.modal-body-succed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: #232323;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.modal-body-succed h2 {
+  width: 80%;
+}
+
+.modal-body-succed button {
+  position: absolute;
+  bottom: 2.5%;
+  padding: 12px 82px;
+  border-radius: 7px;
 }
