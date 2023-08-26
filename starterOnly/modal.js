@@ -13,25 +13,23 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const btnSubmit = document.querySelector(".btn-submit");
 
-// launch modal event
+// launch modal event, au click joue la fonction "launchModal"
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// launch modal form
+// fonction launch modal
 function launchModal() {
   modalbg.style.display = "block";
   console.log("ca click");
-
-  //   On cible la croix de fermeture de modal,
-  // TODO au click la modal se ferme  (remove.eventlistener)
-  const close = document.querySelector(".close");
-
-  close.addEventListener("click", () => {
-    modalbg.style.display = "none";
-    console.log("ca ferme");
-  });
 }
 
-// * ------------2nd CHANCE----------- **********************
+//   On cible la croix de fermeture de modal,
+const close = document.querySelector(".close");
+
+//  au click la modal se ferme
+close.addEventListener("click", () => {
+  modalbg.style.display = "none";
+  console.log("ca ferme");
+});
 
 const inputs = document.querySelectorAll(
   "input[type=text],input[type=email],input[type=date],input[type=number],input[type=radio],input[type=checkbox]"
@@ -168,26 +166,53 @@ inputs.forEach((input) => {
 const form = document.getElementById("myForm");
 const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
+const email = document.getElementById("email");
+const birthDate = document.getElementById("birthdate");
+const quantity = document.getElementById("quantity");
+const spanCity = document.querySelector(".span-city");
+const checkbox1 = document.getElementById("checkbox1");
 
 form.addEventListener("submit", (e) => {
-  // Pour prevenir le comportement par défaut de l'input de type submit
   e.preventDefault();
 
-  if (firstName.value && lastName.value) {
+  if (
+    !firstName.value ||
+    !lastName.value ||
+    !email.value ||
+    !birthDate.value ||
+    !quantity.value ||
+    !checkbox1.checked
+  ) {
+    if (!firstName.value) {
+      firstnameChecker("");
+    }
+    if (!lastName.value) {
+      lastnameChecker("");
+    }
+    if (!email.value) {
+      emailChecker("");
+    }
+    if (!birthDate.value) {
+      birthdateChecker("");
+    }
+    if (!quantity.value) {
+      playChecker(-1);
+    }
+  } else {
+    // Si toutes les conditions sont satisfaites, exécuter le reste du code
     const data = {
       firstName: firstName.value,
       lastName: lastName.value,
+      emailChecker: email.value,
+      birthdateChecker: birthDate.value,
+      playChecker: playChecker.value,
+      cityChecker: cityChecker,
+      cgvChecker: cgvChecker,
     };
     console.log(data);
-    const modalBodySucced = document.querySelector(".modal-body-succed");
 
+    const modalBodySucced = document.querySelector(".modal-body-succed");
     modalBodySucced.classList.remove("disable");
-  } else {
-    firstnameChecker("");
-    lastnameChecker("");
-    emailChecker("");
-    birthdateChecker("");
-    playChecker(value);
   }
 });
 
@@ -204,5 +229,3 @@ btnEnd.addEventListener("click", () => {
   modalBodySucced.classList.add("disable");
   myForm.reset();
 });
-
-// onsubmit="return validate();"
