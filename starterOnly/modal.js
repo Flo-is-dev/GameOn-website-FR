@@ -19,7 +19,6 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // fonction launch modal
 function launchModal() {
   modalbg.style.display = "block";
-  console.log("ca click");
 }
 
 //   On cible la croix de fermeture de modal,
@@ -28,7 +27,6 @@ const close = document.querySelector(".close");
 //  au click la modal se ferme
 close.addEventListener("click", () => {
   modalbg.style.display = "none";
-  console.log("ca ferme");
 });
 
 const inputs = document.querySelectorAll(
@@ -48,7 +46,7 @@ const firstnameChecker = (value) => {
 };
 
 const lastnameChecker = (value) => {
-  console.log(value);
+  //   console.log(value);
   const lastName = document.getElementById("last");
   if (value.length <= 1) {
     lastName.parentElement.classList.add("error");
@@ -61,18 +59,19 @@ const lastnameChecker = (value) => {
 
 const emailChecker = (value) => {
   const email = document.getElementById("email");
-  console.log(value);
+  //   console.log(value);
   if (!value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
     email.parentElement.classList.add("error");
     email.classList.add("error-input");
   } else {
     email.classList.remove("error-input");
     email.parentElement.classList.remove("error");
+    return true;
   }
 };
 
 const birthdateChecker = (value) => {
-  console.log(value);
+  //   console.log(value);
   const birthDate = document.getElementById("birthdate");
 
   if (value === "") {
@@ -85,10 +84,10 @@ const birthdateChecker = (value) => {
 };
 
 const playChecker = (value) => {
-  console.log(value);
+  //   console.log(value);
   const quantity = document.getElementById("quantity");
 
-  if (isNaN(value) || value < 0) {
+  if (isNaN(value) || value < 0 || value > 99) {
     quantity.classList.add("error-input");
     quantity.parentElement.classList.add("error");
   } else {
@@ -98,7 +97,7 @@ const playChecker = (value) => {
 };
 
 const cityChecker = (value) => {
-  console.log(value);
+  //   console.log(value);
   const spanCity = document.querySelector(".span-city");
 
   if (value !== true) {
@@ -112,7 +111,7 @@ const cityChecker = (value) => {
 
 const cgvChecker = (value) => {
   const checkbox1 = document.getElementById("checkbox1");
-  console.log(value);
+  //   console.log(value);
 
   if (value === false) {
     checkbox1.classList.add("error-input");
@@ -178,7 +177,7 @@ form.addEventListener("submit", (e) => {
   if (
     !firstName.value ||
     !lastName.value ||
-    !email.value ||
+    !emailChecker(email.value) ||
     !birthDate.value ||
     !quantity.value ||
     !checkbox1.checked
@@ -189,7 +188,7 @@ form.addEventListener("submit", (e) => {
     if (!lastName.value) {
       lastnameChecker("");
     }
-    if (!email.value) {
+    if (!emailChecker(email.value)) {
       emailChecker("");
     }
     if (!birthDate.value) {
@@ -205,9 +204,9 @@ form.addEventListener("submit", (e) => {
       lastName: lastName.value,
       emailChecker: email.value,
       birthdateChecker: birthDate.value,
-      playChecker: playChecker.value,
-      cityChecker: cityChecker,
-      cgvChecker: cgvChecker,
+      playChecker: quantity.value,
+      cityChecker: spanCity,
+      cgvChecker: checkbox1.checked,
     };
     console.log(data);
 
