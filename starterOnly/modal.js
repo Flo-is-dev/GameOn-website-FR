@@ -45,6 +45,7 @@ const firstnameChecker = (value) => {
   } else {
     firstName.parentElement.classList.remove("error");
     firstName.classList.remove("error-input");
+    return true;
   }
 };
 
@@ -161,15 +162,36 @@ inputs.forEach((input) => {
   });
 });
 
+// *---------BTN SUBMIT ---------------------------------------------------
+
 // Bouton qui permet de soumettre le formulaire. Affiche un message d'erreur si tous les champs ne sont pas valide
-btnSubmit.addEventListener("click", (e) => {
+const form = document.getElementById("myForm");
+const firstName = document.getElementById("first");
+const lastName = document.getElementById("last");
+
+form.addEventListener("submit", (e) => {
   // Pour prevenir le comportement par défaut de l'input de type submit
   e.preventDefault();
 
-  const modalBodySucced = document.querySelector(".modal-body-succed");
+  if (firstName.value && lastName.value) {
+    const data = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+    };
+    console.log(data);
+    const modalBodySucced = document.querySelector(".modal-body-succed");
 
-  modalBodySucced.classList.remove("disable");
+    modalBodySucced.classList.remove("disable");
+  } else {
+    firstnameChecker("");
+    lastnameChecker("");
+    emailChecker("");
+    birthdateChecker("");
+    playChecker(value);
+  }
 });
+
+// *---------BTN END--------------------------------------------------------
 
 const btnEnd = document.getElementById("btn-end");
 
@@ -182,3 +204,5 @@ btnEnd.addEventListener("click", () => {
   modalBodySucced.classList.add("disable");
   myForm.reset();
 });
+
+// onsubmit="return validate();"
