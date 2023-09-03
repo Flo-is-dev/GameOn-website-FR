@@ -32,9 +32,15 @@ close.addEventListener("click", () => {
 const inputs = document.querySelectorAll(
   "input[type=text],input[type=email],input[type=date],input[type=number],input[type=radio],input[type=checkbox]"
 );
+const firstName = document.getElementById("first");
+const lastName = document.getElementById("last");
+const email = document.getElementById("email");
+const birthDate = document.getElementById("birthdate");
+const quantity = document.getElementById("quantity");
+const spanCity = document.querySelector(".span-city");
+const checkbox1 = document.getElementById("checkbox1");
 
 const firstnameChecker = (value) => {
-  const firstName = document.getElementById("first");
   if (value.length <= 1) {
     firstName.parentElement.classList.add("error");
     firstName.classList.add("error-input");
@@ -47,18 +53,19 @@ const firstnameChecker = (value) => {
 
 const lastnameChecker = (value) => {
   //   console.log(value);
-  const lastName = document.getElementById("last");
+  //   const lastName = document.getElementById("last");
   if (value.length <= 1) {
     lastName.parentElement.classList.add("error");
     lastName.classList.add("error-input");
   } else {
     lastName.parentElement.classList.remove("error");
     lastName.classList.remove("error-input");
+    return true;
   }
 };
 
 const emailChecker = (value) => {
-  const email = document.getElementById("email");
+  //   const email = document.getElementById("email");
   //   console.log(value);
   if (!value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
     email.parentElement.classList.add("error");
@@ -70,9 +77,17 @@ const emailChecker = (value) => {
   }
 };
 
+// on met le formulaire à la date du jour
+let today = new Date().toISOString().split("T")[0];
+birthDate.value = today;
+birthDate.max = today;
+
 const birthdateChecker = (value) => {
-  //   console.log(value);
-  const birthDate = document.getElementById("birthdate");
+  //   let currentDate = new Date();
+  //   let birthdateDay = new Date(value);
+  //   let diff = new Date(currentDate - birthdateDay);
+  //   let age = Math.abs(diff.getUTCFullYear() - 1970);
+  //   console.log(age);
 
   if (value === "") {
     birthDate.classList.add("error-input");
@@ -80,12 +95,15 @@ const birthdateChecker = (value) => {
   } else {
     birthDate.classList.remove("error-input");
     birthDate.parentElement.classList.remove("error");
+    return true;
   }
 };
 
+console.log(birthdateChecker());
+
 const playChecker = (value) => {
   //   console.log(value);
-  const quantity = document.getElementById("quantity");
+  //   const quantity = document.getElementById("quantity");
 
   if (isNaN(value) || value < 0 || value > 99) {
     quantity.classList.add("error-input");
@@ -97,8 +115,8 @@ const playChecker = (value) => {
 };
 
 const cityChecker = (value) => {
-  //   console.log(value);
-  const spanCity = document.querySelector(".span-city");
+  console.log(value);
+  //   const spanCity = document.querySelector(".span-city");
 
   if (value !== true) {
     spanCity.classList.add("error-input");
@@ -110,8 +128,8 @@ const cityChecker = (value) => {
 };
 
 const cgvChecker = (value) => {
-  const checkbox1 = document.getElementById("checkbox1");
-  //   console.log(value);
+  //   const checkbox1 = document.getElementById("checkbox1");
+  // console.log(value);
 
   if (value === false) {
     checkbox1.classList.add("error-input");
@@ -163,22 +181,15 @@ inputs.forEach((input) => {
 
 // Bouton qui permet de soumettre le formulaire. Affiche un message d'erreur si tous les champs ne sont pas valide
 const form = document.getElementById("myForm");
-const firstName = document.getElementById("first");
-const lastName = document.getElementById("last");
-const email = document.getElementById("email");
-const birthDate = document.getElementById("birthdate");
-const quantity = document.getElementById("quantity");
-const spanCity = document.querySelector(".span-city");
-const checkbox1 = document.getElementById("checkbox1");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (
-    !firstName.value ||
-    !lastName.value ||
+    !firstnameChecker(firstName.value) ||
+    !lastnameChecker(lastName.value) ||
     !emailChecker(email.value) ||
-    !birthDate.value ||
+    !birthdateChecker(birthDate.value) ||
     !quantity.value ||
     !checkbox1.checked
   ) {
@@ -191,7 +202,7 @@ form.addEventListener("submit", (e) => {
     if (!emailChecker(email.value)) {
       emailChecker("");
     }
-    if (!birthDate.value) {
+    if (!birthdateChecker(birthDate.value)) {
       birthdateChecker("");
     }
     if (!quantity.value) {
@@ -212,6 +223,15 @@ form.addEventListener("submit", (e) => {
 
     const modalBodySucced = document.querySelector(".modal-body-succed");
     modalBodySucced.classList.remove("disable");
+
+    close.addEventListener("click", () => {
+      const modalBodySucced = document.querySelector(".modal-body-succed");
+      const myForm = document.getElementById("myForm");
+
+      modalbg.style.display = "none";
+      modalBodySucced.classList.add("disable");
+      myForm.reset();
+    });
   }
 });
 
