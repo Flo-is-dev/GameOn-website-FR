@@ -99,12 +99,7 @@ const birthdateChecker = (value) => {
   }
 };
 
-console.log(birthdateChecker());
-
 const playChecker = (value) => {
-  //   console.log(value);
-  //   const quantity = document.getElementById("quantity");
-
   if (isNaN(value) || value < 0 || value > 99) {
     quantity.classList.add("error-input");
     quantity.parentElement.classList.add("error");
@@ -114,23 +109,35 @@ const playChecker = (value) => {
   }
 };
 
-const cityChecker = (value) => {
-  console.log(value);
-  //   const spanCity = document.querySelector(".span-city");
+// TODO ********************* input radio
 
-  if (value !== true) {
-    spanCity.classList.add("error-input");
-    spanCity.classList.add("error");
+const selectedRadio = document.querySelector('input[name="location"]');
+const textLabel = document.querySelector(".text-label");
+
+const cityChecker = (selectedRadio) => {
+  console.log(selectedRadio);
+
+  if (selectedRadio.checked == false) {
+    // spanCity.classList.add("error");
+    return false;
   } else {
-    spanCity.classList.remove("error-input");
     spanCity.classList.remove("error");
+    return true;
   }
 };
+console.log(cityChecker(selectedRadio));
+
+// Création d'un forEach pour récupérer la valeur de chaque radio input individuellement
+
+document.querySelectorAll('input[name="location"]').forEach((radio) => {
+  radio.addEventListener("change", () => {
+    // Appeler cityChecker avec la valeur du bouton radio sélectionné
+    cityChecker(radio.value);
+    console.log(cityChecker(radio.value));
+  });
+});
 
 const cgvChecker = (value) => {
-  //   const checkbox1 = document.getElementById("checkbox1");
-  // console.log(value);
-
   if (value === false) {
     checkbox1.classList.add("error-input");
     checkbox1.parentElement.classList.add("error");
@@ -142,8 +149,6 @@ const cgvChecker = (value) => {
 
 inputs.forEach((input) => {
   input.addEventListener("input", (e) => {
-    // console.log(e);
-    // console.log(e.target.value);
     switch (e.target.id) {
       case "first":
         firstnameChecker(e.target.value);
@@ -159,14 +164,6 @@ inputs.forEach((input) => {
         break;
       case "quantity":
         playChecker(e.target.value);
-        break;
-      case "location1":
-      case "location2":
-      case "location3":
-      case "location4":
-      case "location5":
-      case "location6":
-        cityChecker(e.isTrusted);
         break;
       case "checkbox1":
         cgvChecker(e.target.checked);
@@ -191,6 +188,7 @@ form.addEventListener("submit", (e) => {
     !emailChecker(email.value) ||
     !birthdateChecker(birthDate.value) ||
     !quantity.value ||
+    !cityChecker(selectedRadio) ||
     !checkbox1.checked
   ) {
     if (!firstName.value) {
@@ -208,15 +206,26 @@ form.addEventListener("submit", (e) => {
     if (!quantity.value) {
       playChecker(-1);
     }
+    if (!cityChecker(selectedRadio)) {
+      cityChecker(!selectedRadio);
+      spanCity.classList.add("error");
+      console.log("pas de VILLE");
+    } else {
+      spanCity.classList.remove("error");
+      return true;
+    }
   } else {
     // Si toutes les conditions sont satisfaites, exécuter le reste du code
+    // création d'un obket data pour exporter les données du formulaire
     const data = {
       firstName: firstName.value,
       lastName: lastName.value,
       emailChecker: email.value,
       birthdateChecker: birthDate.value,
       playChecker: quantity.value,
-      cityChecker: spanCity,
+      cityChecker: cityChecker(
+        document.querySelector('input[name="location"]:checked').value
+      ),
       cgvChecker: checkbox1.checked,
     };
     console.log(data);
